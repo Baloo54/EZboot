@@ -1,0 +1,47 @@
+networks:
+  app-net:
+    driver: bridge
+  
+volumes:
+  mariadb-data:
+
+services:
+  mariadb:
+    image: mariadb:lts
+    container_name: mariadb_ezboot
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MARIADB_DATABASE}
+      MYSQL_USER: ${MARIADB_USER}
+      MYSQL_PASSWORD: ${MARIADB_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb-data:/var/lib/mysql
+      - ./backend/mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - app-net
+    healthcheck:
+    test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+    interval: 10s
+    timeout: 5s
+    retries: 5
+
+
+  app:
+    build: ./backend
+    container_name: app_ezboot
+    environment:
+      - MARIADB_HOST=${MARIADB_HOST:-mariadb}
+      - MARIADB_PORT=${MARIADB_PORT:-3306}
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+    restart: always
+    depends_on:
+      - mariadb
+    ports:
+      - "3000:3000"
+    networks:
+      - app-net
