@@ -4,7 +4,7 @@ FROM node:lts
 WORKDIR /app
 
 # Copie les fichiers de configuration et les tests
-COPY package*.json src/ tests/ ./
+COPY package*.json src/ tests/ .Serveur.js ./
 
 # Installe les dépendances de production
 RUN npm install --production \
