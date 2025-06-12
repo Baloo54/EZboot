@@ -1,0 +1,69 @@
+name: Test Node.js in Docker container
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      # Variables MariaDB
+      MARIADB_ROOT_PASSWORD: rootpass
+      MARIADB_DATABASE: ezboot
+      MARIADB_USER: ezuser
+      MARIADB_PASSWORD: ezpass
+      # Variables Keycloak
+      KEYCLOAK_URL: http://localhost:8080
+      KEYCLOAK_REALM: ezboot-realm
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: adminpass
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Create secrets folder and secrets
+        run: |
+          mkdir -p secrets
+          echo "${MARIADB_ROOT_PASSWORD}" > secrets/mariadb_root_password
+          echo "${MARIADB_DATABASE}" > secrets/mariadb_database        
+          echo "${MARIADB_USER}" > secrets/mariadb_user
+          echo "${MARIADB_PASSWORD}" > secrets/mariadb_password
+          echo "${KEYCLOAK_URL}" > secrets/keycloak_url
+          echo "${KEYCLOAK_REALM}" > secrets/keycloak_realm
+          echo "${KEYCLOAK_ADMIN}" > secrets/keycloak_admin
+          echo "${KEYCLOAK_ADMIN_PASSWORD}" > secrets/keycloak_admin_password
+         
+
+      - name: Start Docker Compose
+        run: docker-compose up -d --build
+
+      - name: Wait for MariaDB to be healthy
+        run: |
+          echo "Waiting for mariadb_ezboot to be healthy..."
+          for i in {1..30}; do
+            STATUS=$(docker inspect --format='{{.State.Health.Status}}' mariadb_ezboot || echo "starting")
+            echo "Status: $STATUS"
+            if [ "$STATUS" == "healthy" ]; then
+              echo "MariaDB is healthy!"
+              break
+            fi
+            sleep 5
+          done
+
+      - name: Wait for app_ezboot container to start
+        run: |
+          echo "Waiting for app_ezboot to be up..."
+          for i in {1..10}; do
+            docker exec app_ezboot true && break
+            sleep 3
+          done
+
+      - name: Run tests in the app container
+        run: docker exec app_ezboot npm test
+
+      - name: Shutdown
+        if: always()
+        run: docker-compose down -v
