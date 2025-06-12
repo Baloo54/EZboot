@@ -40,19 +40,6 @@ jobs:
       - name: Start Docker Compose
         run: docker compose up -d --build
 
-      - name: Wait for MariaDB to be healthy
-        run: |
-          echo "Waiting for mariadb_ezboot to be healthy..."
-          for i in {1..30}; do
-            STATUS=$(docker inspect --format='{{.State.Health.Status}}' mariadb_ezboot || echo "starting")
-            echo "Status: $STATUS"
-            if [ "$STATUS" == "healthy" ]; then
-              echo "MariaDB is healthy!"
-              break
-            fi
-            sleep 5
-          done
-
       - name: Wait for app_ezboot container to start
         run: |
           echo "Waiting for app_ezboot to be up..."
