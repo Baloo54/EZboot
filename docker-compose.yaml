@@ -50,3 +50,4 @@ services:
       - "3001:3001"
     networks:
       - app-net
+    platform: linux/amd64
