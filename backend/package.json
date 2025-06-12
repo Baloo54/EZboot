@@ -4,13 +4,17 @@
   "type": "commonjs",
   "scripts": {
     "test": "jest",
-    "start": "node Server.js"
+    "start": "node Serveur.js"
   },
   "devDependencies": {
     "jest": "^29.7.0",
     "supertest": "^7.1.1"
   },
   "dependencies": {
-    "express": "^5.1.0"
+    "cors": "^2.8.5",
+    "axios": "^1.9.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1"
   }
 }

@@ -4,12 +4,13 @@ FROM node:lts
 WORKDIR /app
 
 # Copie les fichiers de configuration et les tests
-COPY package*.json src/ tests/ .Serveur.js ./
+COPY package*.json src/ tests/ Serveur.js ./
 
 # Installe les dépendances de production
 RUN npm install --production \
-    && adduser -D -h /app appuser \
+    && useradd --system --home-dir /app --create-home appuser \
     && chown -R appuser:appuser /app
+
 
 #Execute le serveur en tant qu'utilisateur non root
 
