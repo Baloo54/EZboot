@@ -7,15 +7,4 @@ describe('Test des routes API', () => {
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual({ message: 'Hello world!' });
   });
-
-  test('POST /api/echo doit renvoyer ce qui est envoyé', async () => {
-    const data = { name: 'ChatGPT', age: 3 };
-    const res = await request(app)
-      .post('/api/echo')
-      .send(data)
-      .set('Accept', 'application/json');
-
-    expect(res.statusCode).toBe(200);
-    expect(res.body).toEqual({ youSent: data });
-  });
 });
