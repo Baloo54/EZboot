@@ -46,7 +46,7 @@ services:
   app:
     build: ./backend
     container_name: app_ezboot
-    volume: 
+    volumes: 
       - ./secrets:/run/secrets:ro
     restart: always
     depends_on:
