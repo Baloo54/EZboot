@@ -1,10 +1,8 @@
 const axios = require('axios');
-
 const KEYCLOAK_URL = process.env.KEYCLOAK_URL || 'http://localhost:8080';
 const KEYCLOAK_REALM = process.env.KEYCLOAK_REALM || 'master';
 const KEYCLOAK_ADMIN = process.env.KEYCLOAK_ADMIN || 'admin';
 const KEYCLOAK_ADMIN_PASSWORD = process.env.KEYCLOAK_ADMIN_PASSWORD || 'admin';
-
 // Utilisateur à créer
 const user = {
   username: 'testuser',
