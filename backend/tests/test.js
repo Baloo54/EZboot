@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../App');
+const app = require('../src/app/App');
 
 describe('Test des routes API', () => {
   test('GET /api/hello doit retourner un message Hello world!', async () => {
