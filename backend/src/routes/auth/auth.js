@@ -1,9 +1,21 @@
 // keycloak/auth.js
-const axios = require('axios');
+import axios from 'axios';
+import { readFileSync, existsSync } from 'fs';
+
+function readSecret(path, fallback = '') {
+  try {
+    if (existsSync(path)) {
+      return readFileSync(path, 'utf8').trim();
+    }
+  } catch (e) {
+    // tu peux logger ou ignorer
+  }
+  return fallback;
+}
 
 async function login(username, password) {
-  const KEYCLOAK_URL = process.env.KEYCLOAK_URL || 'http://localhost:8080';
-  const KEYCLOAK_REALM = process.env.KEYCLOAK_REALM || 'master';
+  const KEYCLOAK_REALM = readSecret('/run/secrets/keycloak_realm', process.env.KEYCLOAK_REALM);
+  const KEYCLOAK_URL = readSecret('/run/secrets/keycloak_url', process.env.KEYCLOAK_URL);
 
   const params = new URLSearchParams();
   params.append('grant_type', 'password');

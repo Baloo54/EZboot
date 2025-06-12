@@ -4,7 +4,7 @@ FROM node:lts
 WORKDIR /app
 
 # Copie les fichiers de configuration et les tests
-COPY package*.json Server.js ./  
+COPY package*.json jest.config.js .babelrc Server.js ./  
 COPY src ./src  
 COPY tests ./tests
 

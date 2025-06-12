@@ -8,7 +8,9 @@
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "supertest": "^7.1.1"
+    "supertest": "^7.1.1",
+    "babel-jest": "^29.7.0",
+    "@babel/preset-env": "^7.24.7"
   },
   "dependencies": {
     "cors": "^2.8.5",

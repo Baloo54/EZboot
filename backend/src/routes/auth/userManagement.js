@@ -1,12 +1,29 @@
 // keycloak/userManagement.js
-const axios = require('axios');
-const { getAdminToken } = require('./adminToken');
+import axios from 'axios';
+import { getAdminToken } from './adminToken.js';
+import { readFileSync, existsSync } from 'fs';
 
-const KEYCLOAK_URL = process.env.KEYCLOAK_URL || 'http://localhost:8080';
-const KEYCLOAK_REALM = process.env.KEYCLOAK_REALM || 'master';
+function readSecret(path, fallback = '') {
+  try {
+    if (existsSync(path)) {
+      return readFileSync(path, 'utf8').trim();
+    }
+  } catch (e) {
+    // tu peux logger ou ignorer
+  }
+  return fallback;
+}
+
+function getKeycloakConfig() {
+  return {
+    KEYCLOAK_REALM: readSecret('/run/secrets/keycloak_realm', process.env.KEYCLOAK_REALM),
+    KEYCLOAK_URL: readSecret('/run/secrets/keycloak_url', process.env.KEYCLOAK_URL),
+  };
+}
 
 async function createUser({ username, password, email }) {
   const token = await getAdminToken();
+  const { KEYCLOAK_REALM, KEYCLOAK_URL } = getKeycloakConfig();
   const user = {
     username,
     enabled: true,
@@ -34,6 +51,8 @@ async function createUser({ username, password, email }) {
 }
 
 async function deleteUserByUsername(username) {
+  const { KEYCLOAK_REALM, KEYCLOAK_URL } = getKeycloakConfig();
+
   const token = await getAdminToken();
   // 1. Chercher l'utilisateur
   const searchRes = await axios.get(
