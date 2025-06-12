@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "jest",
-    "start": "node Serveur.js"
+    "start": "node Server.js"
   },
   "devDependencies": {
     "jest": "^29.7.0",
