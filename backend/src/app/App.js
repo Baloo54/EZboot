@@ -1,4 +1,3 @@
-import session from 'express-session';
 import express from 'express';
 import authRouter from './src/routes/auth/authRouter'; 
 const app = express();
