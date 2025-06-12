@@ -38,7 +38,7 @@ jobs:
          
 
       - name: Start Docker Compose
-        run: docker-compose up -d --build
+        run: docker compose up -d --build
 
       - name: Wait for MariaDB to be healthy
         run: |
@@ -66,4 +66,4 @@ jobs:
 
       - name: Shutdown
         if: always()
-        run: docker-compose down -v
+        run: docker compose down -v
