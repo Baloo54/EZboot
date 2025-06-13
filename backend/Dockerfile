@@ -21,7 +21,7 @@ USER appuser
 
 # Expose le port 3000
 
-EXPOSE 3001
+EXPOSE 3000
 
 # Démarre le serveur
 CMD ["npm", "start"]

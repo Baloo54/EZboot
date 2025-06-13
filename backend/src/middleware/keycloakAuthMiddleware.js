@@ -1,4 +1,4 @@
-import {jwt} from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import jwksClient from 'jwks-rsa';
 
 // URL pour récupérer la clé publique JWKS Keycloak (à adapter)
@@ -55,4 +55,4 @@ function keycloakAuthMiddleware(req, res, next) {
   });
 }
 
-module.exports = keycloakAuthMiddleware;
+export default keycloakAuthMiddleware;

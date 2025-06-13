@@ -1,7 +1,7 @@
 // keycloak/keycloakService.js
 
 import axios from 'axios';
-import { readSecret } from '../utils/ReadSecrets.js';
+import  readSecret  from '../utils/ReadSecrets.js';
 
 const KEYCLOAK_URL = 'http://keycloak:8080';
 const KEYCLOAK_REALM = 'ezboot';

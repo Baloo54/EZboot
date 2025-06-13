@@ -1,0 +1,33 @@
+{
+  "realm": "ezboot",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "frontend",
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "redirectUris": [
+        "http://localhost:80/*"
+      ],
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "serviceAccountsEnabled": false,
+      "authorizationServicesEnabled": false
+    },
+    {
+      "clientId": "backend",
+      "publicClient": false,
+      "secret": "changemebackendsecret",
+      "directAccessGrantsEnabled": true,
+      "redirectUris": [
+        "http://localhost:80/*"
+      ],
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": false
+    }
+  ]
+}
+  

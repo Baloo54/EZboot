@@ -1,7 +1,9 @@
+version: '3.8'
+
 networks:
   app-net:
     driver: bridge
-  
+
 volumes:
   mariadb-data:
 
@@ -9,16 +11,27 @@ services:
 
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.4
-    ports:
-      - "8080:8080"
+    container_name: keycloak_ezboot
+    command:
+      - start-dev
+      - --import-realm                     # ⚠️ Retire cette ligne après premier import
+      - --hostname-strict=false
     environment:
-      KEYCLOAK_URL: ${KEYCLOAK_URL}
-      KEYCLOAK_REALM: ${KEYCLOAK_REALM}
+      KC_DB: mariadb
+      KC_DB_URL_HOST: mariadb
+      KC_DB_USERNAME: ${MARIADB_USER}
+      KC_DB_PASSWORD: ${MARIADB_PASSWORD}
+      KC_DB_URL_DATABASE: ${MARIADB_DATABASE}
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
-    command: start-dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dockerfile/keycloak/import:/opt/keycloak/data/import:ro
     depends_on:
       - mariadb
+    networks:
+      - app-net
 
   mariadb:
     image: mariadb:lts
@@ -33,13 +46,11 @@ services:
       - "3306:3306"
     volumes:
       - mariadb-data:/var/lib/mysql
-      - ./backend/mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     networks:
       - app-net
 
-
   app:
-    build: ./backend
+    build: ./backend/
     container_name: app_ezboot
     volumes: 
       - ./secrets:/run/secrets:ro
@@ -47,7 +58,18 @@ services:
     depends_on:
       - mariadb
     ports:
-      - "3001:3001"
+      - "3000:3000"
     networks:
       - app-net
     platform: linux/amd64
+
+  nginx:
+    build: ./dockerfile/nginx/
+    container_name: nginx_ezboot
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+    networks:
+      - app-net
+    restart: unless-stopped
