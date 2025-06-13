@@ -1,7 +1,8 @@
-EZboot
+#EZboot
 
 EZboot est une application web de gestion d’images systèmes (ISO), offrant une plateforme sécurisée pour télécharger et gérer des fichiers ISO avec authentification utilisateur.
-🚀 Fonctionnalités
+
+🚀 Fonctionnalités :
 
     Gestion des utilisateurs : Authentification sécurisée via Keycloak
 
@@ -11,7 +12,8 @@ EZboot est une application web de gestion d’images systèmes (ISO), offrant un
 
     Sécurité : Protection CSRF, en-têtes HTTP sécurisés et authentification OAuth2
 
-📦 Architecture
+
+📦 Architecture :
 
 EZboot repose sur une architecture microservices moderne :
 
@@ -26,13 +28,13 @@ EZboot repose sur une architecture microservices moderne :
     Serveur web : Nginx en reverse proxy
 
 🔧 Installation et mise en place
-Prérequis
+Prérequis :
 
     Docker et Docker Compose
 
     Node.js (pour le développement local)
 
-Installation
+Installation :
 
     Cloner le dépôt :
 
@@ -70,7 +72,8 @@ Construire et démarrer les services :
     Accéder à l’application sur : http://localhost:80
 
 🧪 Développement et tests
-Développement backend
+
+Développement backend :
 
 cd backend
 npm install
@@ -82,7 +85,7 @@ cd frontend
 npm install
 npm run dev
 
-📊 Structure du projet
+📊 Structure du projet :
 
 ├── backend/              # API backend Express.js
 │   ├── src/              # Code source
@@ -112,7 +115,7 @@ EZboot met en œuvre plusieurs mesures de sécurité :
 
     Gestion sécurisée des secrets
 
-🧰 Technologies
+🧰 Technologies :
 
     Frontend : React, Material UI, React Router, Keycloak JS
 
@@ -126,7 +129,7 @@ EZboot met en œuvre plusieurs mesures de sécurité :
 
     CI/CD : GitHub Actions
 
-👥 Contributeurs
+👥 Contributeurs :
 
     Gabriel Compte
 
