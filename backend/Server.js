@@ -1,6 +1,6 @@
 import express from 'express';
 import { SecurityHeaders, CorsOptions } from './src/middleware/SecurityHeaders.js';
-import keycloakAuthRoutes from './src/routes/keycloakAuthRoutes.js';
+import keycloakAuthRoutes from './src/routes/MariaAuthRouter.js';
 
 const app = express();
 

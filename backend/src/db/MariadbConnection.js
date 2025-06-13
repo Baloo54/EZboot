@@ -1,6 +1,6 @@
 // --- db/config.js ---
 import mysql from 'mysql2/promise';
-import { readSecret } from '../utils/ReadSecrets.js';
+import readSecret  from '../utils/ReadSecrets.js';
 
 const mariadbConfig = {
   host: 'mariadb',
