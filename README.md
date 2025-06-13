@@ -1,4 +1,4 @@
-#EZboot
+# EZboot
 
 EZboot est une application web de gestion d’images systèmes (ISO), offrant une plateforme sécurisée pour télécharger et gérer des fichiers ISO avec authentification utilisateur.
 
